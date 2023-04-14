@@ -127,5 +127,13 @@ public class CameraRay : MonoBehaviour
         {
             circleShape.Radius = Mathf.Clamp(Vector2.Distance(transformPos, mousePos), 0.6f, 1.5f);
         }
+        AreaEffector2D areaEffector = _currentColliderTransform.GetComponent<AreaEffector2D>();
+        if (areaEffector != null)
+        {
+            float radiusNormalized = (circleShape.Radius - 0.6f) / (1.5f - 0.6f); // normalize the radius value between 0 and 1
+            float forceMagnitude = Mathf.Lerp(0.06f, 0.15f, radiusNormalized); // use Mathf.Lerp to interpolate between the min and max force magnitude based on the normalized radius value
+            areaEffector.forceMagnitude = forceMagnitude;
+        }
+
     }
 }
